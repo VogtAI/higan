@@ -120,8 +120,8 @@ Run 'python %(prog)s <subcommand> --help' for subcommand help.''',
     project_real_images_parser.add_argument('--num-snapshots', type=int, help='Number of snapshots (default: %(default)s)', default=5)
     project_real_images_parser.add_argument('--num-images', type=int, help='Number of images to project (default: %(default)s)', default=3)
     project_real_images_parser.add_argument('--result-dir', help='Root directory for run results (default: %(default)s)', default='results', metavar='DIR')
-    project_real_images_parser.add_argument('--num_steps', help='num steps %(default)s)', default=1000)
-    project_real_images_parser.add_argument('--dlatent_avg_samples', help='dlatent (default: %(default)s)', default=10000)
+    project_real_images_parser.add_argument('--num_steps', type=int, help='num steps %(default)s)', default=1000)
+    project_real_images_parser.add_argument('--dlatent_avg_samples', type=int, help='dlatent (default: %(default)s)', default=10000)
 
     args = parser.parse_args()
     subcmd = args.command
