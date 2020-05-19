@@ -52,17 +52,11 @@ def project_generated_images(network_pkl, seeds, num_snapshots, truncation_psi):
 
 #----------------------------------------------------------------------------
 
-def project_real_images(network_pkl, dataset_name, data_dir, num_images, num_snapshots):
-    _num_steps=1000
-    _dlatent_avg_samples=10000
-    
-    if num_images > 1:
-        _num_steps = 20
-        _dlatent_avg_samples = 1000    
+def project_real_images(network_pkl, dataset_name, data_dir, num_images, num_snapshots, num_steps, dlatent_avg_samples):
     
     print('Loading networks from "%s"...' % network_pkl)
     _G, _D, Gs = pretrained_networks.load_networks(network_pkl)
-    proj = projector.Projector(_num_steps, _dlatent_avg_samples)
+    proj = projector.Projector(num_steps, dlatent_avg_samples)
     proj.set_network(Gs)
 
     print('Loading images from "%s"...' % dataset_name)
@@ -126,6 +120,8 @@ Run 'python %(prog)s <subcommand> --help' for subcommand help.''',
     project_real_images_parser.add_argument('--num-snapshots', type=int, help='Number of snapshots (default: %(default)s)', default=5)
     project_real_images_parser.add_argument('--num-images', type=int, help='Number of images to project (default: %(default)s)', default=3)
     project_real_images_parser.add_argument('--result-dir', help='Root directory for run results (default: %(default)s)', default='results', metavar='DIR')
+    project_real_images_parser.add_argument('--num_steps', help='num steps %(default)s)', default=1000)
+    project_real_images_parser.add_argument('--dlatent_avg_samples', help='dlatent (default: %(default)s)', default=10000)
 
     args = parser.parse_args()
     subcmd = args.command
