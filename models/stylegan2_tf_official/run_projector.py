@@ -53,9 +53,16 @@ def project_generated_images(network_pkl, seeds, num_snapshots, truncation_psi):
 #----------------------------------------------------------------------------
 
 def project_real_images(network_pkl, dataset_name, data_dir, num_images, num_snapshots):
+    _num_steps=1000
+    _dlatent_avg_samples=10000
+    
+    if num_images > 1:
+        _num_steps = 20
+        _dlatent_avg_samples = 1000    
+    
     print('Loading networks from "%s"...' % network_pkl)
     _G, _D, Gs = pretrained_networks.load_networks(network_pkl)
-    proj = projector.Projector()
+    proj = projector.Projector(_num_steps, _dlatent_avg_samples)
     proj.set_network(Gs)
 
     print('Loading images from "%s"...' % dataset_name)
