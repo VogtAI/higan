@@ -108,7 +108,7 @@ if __name__ == '__main__':
                      num_layers=model.num_layers,
                      manipulate_layers=manipulate_layers,
                      is_code_layerwise=True,
-                     is_boundary_layerwise=False,
+                     is_boundary_layerwise=True,
                      layerwise_manipulation_strength=strength)
   np.save(os.path.join(work_dir, f'{prefix}_manipulated_wp.npy'), codes)
 
