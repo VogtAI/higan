@@ -22,6 +22,9 @@ def parse_args():
   parser.add_argument('-o', '--output_dir', type=str, default='',
                       help='Directory to save the results. If not specified, '
                            '`${MODEL_NAME}_synthesis` will be used by default.')
+  parser.add_argument('-f', '--output_file', type=str, default='',
+                    help='File to save the results. If not specified, '
+                         '`${MODEL_NAME}_synthesis` will be used by default.')
   parser.add_argument('-i', '--latent_codes_path', type=str, default='',
                       help='If specified, will load latent codes from given '
                            'path instead of randomly sampling. (default: None)')
@@ -83,7 +86,7 @@ def parse_args():
 def main():
   """Main function."""
   args = parse_args()
-
+  file_name = args.output_file
   work_dir = args.output_dir or f'{args.model_name}_synthesis'
   logger_name = f'{args.model_name}_synthesis_logger'
   logger = setup_logger(work_dir, args.logfile_name, logger_name)
@@ -135,7 +138,7 @@ def main():
             predictions[pred_key].append(pred_val)
         for image in val:
           if args.save_raw_synthesis:
-            save_image(os.path.join(work_dir, f'{pbar.n:06d}.jpg'), image)
+            save_image(os.path.join(work_dir, file_name), image)
           if args.generate_html:
             row_idx = pbar.n // visualizer.num_cols
             col_idx = pbar.n % visualizer.num_cols
