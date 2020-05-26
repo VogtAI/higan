@@ -138,8 +138,11 @@ def main():
             predictions[pred_key].append(pred_val)
         for image in val:
           if args.save_raw_synthesis:
-            print('saving image to ', os.path.join(work_dir, file_name))
-            save_image(os.path.join(work_dir, file_name), image)
+            dest = os.path.join(work_dir, f'{pbar.n:06d}.jpg')
+            if file_name != "":
+              dest = os.path.join(work_dir, file_name)
+            print('saving image to ', dest)
+            save_image(dest, image)
           if args.generate_html:
             row_idx = pbar.n // visualizer.num_cols
             col_idx = pbar.n % visualizer.num_cols
